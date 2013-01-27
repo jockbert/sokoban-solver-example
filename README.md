@@ -8,6 +8,6 @@ This project is a work in progress.
 
 Dependencies
 ============
-scala-graph-search-lib (https://github.com/jockbert/scala-graph-search-lib)
-Scala 2.9 (http://www.scala-lang.org/)
-scalatest 1.8 (http://www.scalatest.org/)
+* scala-graph-search-lib (https://github.com/jockbert/scala-graph-search-lib)
+* Scala 2.9 (http://www.scala-lang.org/)
+* scalatest 1.8 (http://www.scalatest.org/)
