@@ -2,11 +2,12 @@ package com.kastrull.sokobansearch
 
 import scala.collection.Seq
 import com.kastrull.graphsearch.State
+import Coord._
 
 trait Sokoban extends State[Sokoban] {
-  val sokoban: Sokoban.Coord
-  val size: Sokoban.Coord
-  val boxes: List[Sokoban.Coord]
+  val sokoban: Coord
+  val size: Coord
+  val boxes: List[Coord]
   val room: Sokoban.Room
   val estimatedFutureCost: Int
 }
@@ -19,7 +20,6 @@ object Sokoban {
       (char, coord) <- charWithCoord(row, rowIndex)
     } yield (char, coord)
 
-    val origo: Coord = (0, 0)
     val emptySokobanState =
       new SokobanStateImpl(origo, origo, Nil, Map(), { s => 0 })
 
@@ -38,7 +38,7 @@ object Sokoban {
 
   def charWithCoord(row: String, rowIndex: Int): Seq[(Char, Coord)] = {
     val indexes = 0 until row.size
-    val coords = for (index <- indexes) yield (index, rowIndex)
+    val coords = for (index <- indexes) yield Coord(index, rowIndex)
     row zip coords
   }
 
@@ -47,8 +47,8 @@ object Sokoban {
     charAndCoord: (Char, Coord)) = {
 
     val (char, charCoord) = charAndCoord
-    val (charX, charY) = charCoord
-    val SokobanStateImpl(sokoban, (sizeX, sizeY), boxes, map, _) = state
+    val Coord(charX, charY) = charCoord
+    val SokobanStateImpl(sokoban, Coord(sizeX, sizeY), boxes, map, _) = state
 
     val newSokoban = char match {
       case 'S' => charCoord
@@ -57,7 +57,7 @@ object Sokoban {
     }
 
     import math.max
-    val newSize: Coord = (max(sizeX - 1, charX) + 1, max(sizeY - 1, charY) + 1)
+    val newSize: Coord = Coord(max(sizeX - 1, charX) + 1, max(sizeY - 1, charY) + 1)
 
     val newBoxes = char match {
       case 'B' => charCoord :: boxes
@@ -84,13 +84,13 @@ object Sokoban {
   def estimatedCost(size: Coord, room: Room): (Sokoban) => Int = {
 
     def manhattan(a: Coord, b: Coord): Int =
-      math.abs(a._1 - b._1) + math.abs(a._2 - b._2)
+      math.abs(a.x - b.x) + math.abs(a.y - b.y)
 
     val coords: List[Coord] =
       (for {
-        y <- 0 to (size._2)
-        x <- 0 to (size._1)
-      } yield (x, y)).toList
+        y <- 0 to (size.y)
+        x <- 0 to (size.x)
+      } yield Coord(x, y)).toList
 
     val targets = coords.filter { room.getOrElse(_, Empty()) == Target() }
 
@@ -123,17 +123,5 @@ object Sokoban {
     precalcCost
   }
 
-  sealed trait Element
-  case class Wall() extends Element
-  case class Empty() extends Element
-  case class Target() extends Element
-
-  type Coord = (Int, Int)
   type Room = Map[Coord, Element]
-
-  val north: Coord = (-1, 0)
-  val south: Coord = (1, 0)
-  val west: Coord = (0, -1)
-  val east: Coord = (0, 1)
-  val directions = List(north, south, west, east)
 }

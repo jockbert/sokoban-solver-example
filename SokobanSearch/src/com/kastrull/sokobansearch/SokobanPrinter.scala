@@ -5,7 +5,7 @@ object SokobanPrinter {
 
   def print(state: Sokoban): String = {
     val rows =
-      for (y <- (0 until state.size._2)) yield rowString(state, y)
+      for (y <- (0 until state.size.y)) yield rowString(state, y)
 
     rows.mkString("\n")
   }
@@ -31,7 +31,7 @@ object SokobanPrinter {
 
   private def rowString(state: Sokoban, y: Int): String = {
 
-    val rowCoords = for { x <- 0 until state.size._1 } yield (x, y)
+    val rowCoords = for { x <- 0 until state.size.x } yield Coord(x, y)
 
     val rowChars = for { coord <- rowCoords } yield coordChar(state, coord)
 
