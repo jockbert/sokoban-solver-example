@@ -1,10 +1,10 @@
 package com.kastrull.sokobansearch
 
 object Coord {
-  val north: Coord = Coord(-1, 0)
-  val south: Coord = Coord(1, 0)
-  val west: Coord = Coord(0, -1)
-  val east: Coord = Coord(0, 1)
+  val north: Coord = Coord(0, -1)
+  val south: Coord = Coord(0, 1)
+  val west: Coord = Coord(-1, 0)
+  val east: Coord = Coord(1, 0)
   val origo: Coord = Coord(0, 0)
   val directions = List(north, south, west, east)
 

@@ -13,8 +13,8 @@ case class BoxBlockChildFilter(
 
   def childStates(): Seq[Sokoban] = {
     val children = wrapped.childStates
-    //    val blocked = children.filter(hasBoxInBadPlace(_)).map(BoxBlockChildFilter(_,noBoxCoords))
-    //    if(blocked.size > 0) println(blocked.mkString("\n","\n","\n"))
+    // val blocked = children.filter(hasBoxInBadPlace(_)).map(BoxBlockChildFilter(_,noBoxCoords))
+    // if(blocked.size > 0) println(blocked.mkString("\n","\n","\n"))
     children.filterNot(hasBoxInBadPlace(_)).map(BoxBlockChildFilter(_, noBoxCoords))
   }
 
@@ -23,5 +23,5 @@ case class BoxBlockChildFilter(
   val boxes: List[Coord] = wrapped.boxes
   val room: Sokoban.Room = wrapped.room
   val estimatedFutureCost: Int = wrapped.estimatedFutureCost
-  override def toString = wrapped.toString
+  override def toString = wrapped.toString + " with BoxBlockFilter" 
 }

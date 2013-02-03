@@ -9,7 +9,9 @@ import com.kastrull.sokobansearch.Wall
 object NoCornerBoxFilter {
   import Coord._
 
-  private val corners = List((north, west), (north, east), (south, west), (south, east))
+  private val corners = List(
+    (north, west), (north, east),
+    (south, west), (south, east))
 
   private def isInCorner(coord: Coord, room: Room): Boolean = {
     def isEmpty(c: Coord) = room.getOrElse(coord, Wall()) == Empty()
