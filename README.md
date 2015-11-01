@@ -1,3 +1,5 @@
+***Warning! This project is a work in progress...***
+
 sokoban-solver-example
 ======================
 
